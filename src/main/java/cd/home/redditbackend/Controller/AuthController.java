@@ -1,5 +1,6 @@
 package cd.home.redditbackend.Controller;
 
+import cd.home.redditbackend.data.LoginRequest;
 import cd.home.redditbackend.data.RegisterRequest;
 import cd.home.redditbackend.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,12 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
         this.authService.signup(registerRequest);
+        return new ResponseEntity<>("User registration successful", OK);
+    }
+
+    @PostMapping("/logiin")
+    public ResponseEntity<String> signup(@RequestBody LoginRequest loginRequest) {
+        this.authService.login(loginRequest);
         return new ResponseEntity<>("User registration successful", OK);
     }
 

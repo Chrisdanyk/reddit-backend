@@ -1,5 +1,6 @@
 package cd.home.redditbackend.service;
 
+import cd.home.redditbackend.data.LoginRequest;
 import cd.home.redditbackend.data.RegisterRequest;
 import cd.home.redditbackend.exceptions.SpringRedditException;
 import cd.home.redditbackend.model.NotificationEmail;
@@ -8,6 +9,8 @@ import cd.home.redditbackend.model.VerificationToken;
 import cd.home.redditbackend.repository.UserRepository;
 import cd.home.redditbackend.repository.VerificationTokenRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,8 @@ public class AuthService {
     private final UserRepository userRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
+
 
     @Transactional
     public void signup(RegisterRequest registerRequest) {
@@ -62,5 +67,9 @@ public class AuthService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new SpringRedditException("User not found with name - " + username));
         user.setEnabled(true);
         userRepository.save(user);
+    }
+
+    public void login(LoginRequest loginRequest) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
     }
 }
