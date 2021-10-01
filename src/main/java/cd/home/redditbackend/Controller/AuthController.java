@@ -1,5 +1,6 @@
 package cd.home.redditbackend.Controller;
 
+import cd.home.redditbackend.data.AuthenticationResponse;
 import cd.home.redditbackend.data.LoginRequest;
 import cd.home.redditbackend.data.RegisterRequest;
 import cd.home.redditbackend.service.AuthService;
@@ -21,10 +22,9 @@ public class AuthController {
         return new ResponseEntity<>("User registration successful", OK);
     }
 
-    @PostMapping("/logiin")
-    public ResponseEntity<String> signup(@RequestBody LoginRequest loginRequest) {
-        this.authService.login(loginRequest);
-        return new ResponseEntity<>("User registration successful", OK);
+    @PostMapping("/login")
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+       return this.authService.login(loginRequest);
     }
 
     @GetMapping("/accountVerification/{token}")
