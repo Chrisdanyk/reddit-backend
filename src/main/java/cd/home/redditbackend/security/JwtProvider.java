@@ -2,7 +2,9 @@ package cd.home.redditbackend.security;
 
 import cd.home.redditbackend.exceptions.SpringRedditException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.time.Instant;
 import static io.jsonwebtoken.Jwts.parser;
 import static java.util.Date.from;
 
+@Slf4j
 @Service
 public class JwtProvider {
     private KeyStore keyStore;
@@ -48,7 +51,6 @@ public class JwtProvider {
                 .setIssuedAt(from(Instant.now()))
                 .signWith(getPrivateKey())
                 .compact();
-//                        .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
 
     }
 
@@ -61,8 +63,14 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String jwt) {
-        parser().setSigningKey(getPublickey()).parseClaimsJws(jwt);
-        return true;
+        boolean isValid = false;
+        Jws<Claims> claimsJws = parser().setSigningKey(getPublickey()).parseClaimsJws(jwt);
+        log.warn("claims " + claimsJws.getBody().toString());
+        if (claimsJws == null) {
+            return isValid;
+        }
+        isValid = !isValid;
+        return isValid;
     }
 
     private PublicKey getPublickey() {

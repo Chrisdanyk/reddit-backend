@@ -1,0 +1,23 @@
+
+###
+GET http://localhost:8080/api/subreddit
+Accept: application/json
+#Authorization: Bearer
+
+
+###
+POST http://localhost:8080/api/subreddit
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJiZW4ga2FmIiwiaWF0IjoxNjMzNzg5NDAwfQ.Xlxl_u-iJ6UEgSmAHm3lICKH_rCE6mpQjTMQXMgdOn9EKvqjnUiW-qPvbM-jxrhicyjcdNiAVRrMW36mmcLLSdCBnHFsv0ORWyDuzRlMmXtWTzz3_X04ZxHnnW8SG7tMlI7taxA6jLMN-4BYpvPxeJBg91Lf7hlr9qB0M1vgMmuwkRyJJHGmgDTOUTlwa0AVycyhqqQOZP6y9F-KzvEmhaB8FnJ763gSBbdvomEPE3lkj1_NdCmMBLZHAh-e5Srt2idDnSGONNPeJYKgl2poxeV-JofqlvttxjQ4wTY2aaiEpJ5wA-iHnRhUnJU8h2OtTFpux1QfCVnZU2nk-PpU7w
+
+{"name": "First Subreddit","description": "This is the first Subreddit"}
+
+###
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "ben kaf",
+  "password": "benkaf"
+}
+

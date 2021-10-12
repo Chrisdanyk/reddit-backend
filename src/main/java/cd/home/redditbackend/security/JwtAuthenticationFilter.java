@@ -1,6 +1,7 @@
 package cd.home.redditbackend.security;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @AllArgsConstructor
+@Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
@@ -27,7 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String jwt = getJwtFromRequest(request);
-
         if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
             String username = jwtProvider.getUsernameFromJwt(jwt);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -35,6 +36,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            SecurityContextHolder.clearContext();
         }
         filterChain.doFilter(request, response);
     }
@@ -42,8 +45,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            log.warn("Token got");
             return bearerToken.substring(7);
         }
+        log.warn("Token not found or don't start with Bearer");
         return bearerToken;
     }
 }
