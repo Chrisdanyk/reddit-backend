@@ -1,6 +1,7 @@
 package cd.home.redditbackend.service;
 
 import cd.home.redditbackend.data.SubredditDto;
+import cd.home.redditbackend.mapper.SubredditMapper;
 import cd.home.redditbackend.model.Subreddit;
 import cd.home.redditbackend.repository.SubredditRepository;
 import lombok.AllArgsConstructor;
@@ -18,10 +19,11 @@ import static java.util.stream.Collectors.toList;
 public class SubredditService {
 
     private final SubredditRepository subredditRepository;
+    private final SubredditMapper subredditMapper;
 
     @Transactional
     public SubredditDto save(SubredditDto subredditDto) {
-        Subreddit save = subredditRepository.save(mapSubredditToDto(subredditDto));
+        Subreddit save = subredditRepository.save(subredditMapper.mapDtoToSubreddit(subredditDto));
         subredditDto.setId(save.getId());
         return subredditDto;
     }
@@ -30,18 +32,11 @@ public class SubredditService {
     public List<SubredditDto> getAll() {
         return subredditRepository.findAll()
                 .stream()
-                .map(this::mapToDto)
+                .map(subredditMapper::mapSubredditToDto)
                 .collect(toList());
     }
 
-    private SubredditDto mapToDto(Subreddit subreddit) {
-        return SubredditDto.builder().
-                id(subreddit.getId()).
-                name(subreddit.getName()).
-                description(subreddit.getDescription()).
-                numberOfPosts(subreddit.getPosts().size()).
-                build();
-    }
+
 
    /* public SubredditDto getSubreddit(Long id) {
         Subreddit subreddit = subredditRepository.findById(id)
@@ -49,9 +44,5 @@ public class SubredditService {
         return subredditMapper.mapSubredditToDto(subreddit);
     }*/
 
-    private Subreddit mapSubredditToDto(SubredditDto subredditDto) {
-        return Subreddit.builder().name(subredditDto.getName())
-                .description(subredditDto.getDescription())
-                .build();
-    }
+
 }

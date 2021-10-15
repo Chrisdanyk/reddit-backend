@@ -19,11 +19,16 @@ public class SubredditController {
 
     @PostMapping
     public ResponseEntity<SubredditDto> createSubreddit(@RequestBody SubredditDto subredditDto) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(subredditService.save(subredditDto));
+        if (subredditDto != null) {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(subredditService.save(subredditDto));
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping
+    /*get all subred*/
     public ResponseEntity<List<SubredditDto>> getAllSubreddits() {
         return ResponseEntity
                 .status(HttpStatus.OK)
