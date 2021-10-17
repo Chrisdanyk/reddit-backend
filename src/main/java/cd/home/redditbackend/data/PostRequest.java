@@ -1,6 +1,5 @@
 package cd.home.redditbackend.data;
 
-import cd.home.redditbackend.model.Subreddit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostRequest {
     private Long postId;
-    private Subreddit subreddit;
+    private String subredditName;
     private String postName;
     private String url;
     private String description;

@@ -1,16 +1,18 @@
 package cd.home.redditbackend.Controller;
 
 import cd.home.redditbackend.data.PostRequest;
+import cd.home.redditbackend.data.PostResponse;
 import cd.home.redditbackend.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -21,10 +23,9 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Void> createPost(@RequestBody PostRequest postRequest) {
-//        postService.save(postRequest);
+        postService.save(postRequest);
         return new ResponseEntity<>(CREATED);
     }
-/*
     @GetMapping
     public ResponseEntity<List<PostResponse>> getAllPosts() {
         return status(OK).body(postService.getAllPosts());
@@ -43,6 +44,6 @@ public class PostController {
     @GetMapping("by-user/{name}")
     public ResponseEntity<List<PostResponse>> getPostsByUsername(@PathVariable String name) {
         return status(OK).body(postService.getPostsByUsername(name));
-    }*/
+    }
 
 }
