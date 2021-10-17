@@ -1,6 +1,7 @@
 package cd.home.redditbackend.service;
 
 import cd.home.redditbackend.data.SubredditDto;
+import cd.home.redditbackend.exceptions.SpringRedditException;
 import cd.home.redditbackend.mapper.SubredditMapper;
 import cd.home.redditbackend.model.Subreddit;
 import cd.home.redditbackend.repository.SubredditRepository;
@@ -37,12 +38,11 @@ public class SubredditService {
     }
 
 
-
-   /* public SubredditDto getSubreddit(Long id) {
+    public SubredditDto getSubreddit(Long id) {
         Subreddit subreddit = subredditRepository.findById(id)
                 .orElseThrow(() -> new SpringRedditException("No subreddit found with ID - " + id));
         return subredditMapper.mapSubredditToDto(subreddit);
-    }*/
+    }
 
 
 }

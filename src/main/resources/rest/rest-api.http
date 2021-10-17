@@ -1,5 +1,10 @@
 
 ###
+GET http://localhost:8080/api/subreddit/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJiZW4ga2FmIiwiaWF0IjoxNjM0MzMwNDc3fQ.OwPtJXPahBcOzPIUkggmXzNAHw0ir_7hEtdDZ7-DBReqJLFZUiV2w-9WCKjV23dgBSTeL6OEMdwKHthVz9SGDVRZ6hc-6aKNbW9AlKWEiAgYqtpdEIesLDgdvvFTY6og7wVMTaPMAejFc0OGxVvCvSy567IDextjhX3I4HJOPex_S0kombVX-NvvOkx8666It6QP86OT4xa4QlByPuIucnlBJ3fr_2gUXTMCfPMupHFIU676oamXS0wowxZOZwtJ1rk7Rs6SOw3TWAVVPpmTkwXzyVo7AJISiWSq2wqtap-bt3c4SQffd8wSGvaASADNmNI3GtcqJjbiP3_1eoWqfw
+
+###
 GET http://localhost:8080/api/subreddit
 Accept: application/json
 #Authorization: Bearer
